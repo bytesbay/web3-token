@@ -1,6 +1,6 @@
-# Web3 Token
-
 ![Project Presentation](resources/logo.jpg "Web3 Token")
+
+# Web3 Token
 
 Web3 Token is a new way to authenticate users. A replacement for JWT.
 
@@ -12,12 +12,14 @@ $ npm i web3-token
 ## Example usage (Client side)
 
 ```js
-import Web3Token from 'parallax-carousel';
+import Web3Token from 'web3-token';
+
+
 ```
 
 ## Example usage (Server side)
 ```js
-import Web3Token from 'parallax-carousel';
+import Web3Token from 'web3-token';
 ```
 
 ## License
