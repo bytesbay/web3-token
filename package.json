@@ -1,6 +1,6 @@
 {
   "name": "web3-token",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": false,
   "description": "Web3 Token is a new way to authenticate users. A replacement for JWT.",
   "author": "bytesbay",
