@@ -17,7 +17,7 @@ export const verify = token => {
     signatureParams.s
   );
   const addressBuffer = EthUtil.publicToAddress(publicKey);
-  const address = EthUtil.bufferToHex(addressBuffer);
+  const address = EthUtil.bufferToHex(addressBuffer).toUpperCase();
 
   const parsed_body = parseAsHeaders(body);
 

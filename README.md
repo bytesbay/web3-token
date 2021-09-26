@@ -35,8 +35,7 @@ import Web3Token from 'web3-token';
 
 const { address, body } = await Web3Token.verify(token);
 
-// now you can find that user by his address
-
+// now you can find that user by his address (better to do it case insensitive)
 req.user = await User.findOne({ address });
 ```
 
