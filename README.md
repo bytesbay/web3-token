@@ -2,7 +2,7 @@
 
 # Web3 Token
 
-Web3 Token is a new way to authenticate users. A replacement for JWT.
+Web3 Token is a new way to authenticate users. A replacement for JWT in hybrid dApps. 
 
 ## Install
 ```bash
