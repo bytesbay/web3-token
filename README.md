@@ -21,7 +21,7 @@ await ethereum.enable();
 // getting address from which we will sign message
 const address = (await web3.eth.getAccounts())[0];
 
-// getting a token
+// generating a token with 1 day of expiration time
 const token = await Web3Token.sign(msg => web3.eth.personal.sign(msg, address), '1d');
 
 // attaching token to authorization header ... for example
@@ -47,7 +47,7 @@ Argument | Name | Description
 --- | --- | ---
 1 | `signer` | A function that returns a promise with signature string eg: web3.personal.sign(`data`, `address`)
 2 | `expire_in` | A string that represents a time span ([see ms module](https://github.com/vercel/ms)) or a number of milliseconds
-3 | `body` | An object that will be appended to a signature's body. Can only contain string values. 
+3 | `body` | An object that will be appended to a signature's body. Can only contain string values. Can be used for some custom data. 
 
 ## License
 Web3 Token is released under the MIT license. © 2021 Miroslaw Shpak
