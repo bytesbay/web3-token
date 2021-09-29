@@ -29,7 +29,7 @@ const token = await Web3Token.sign(msg => web3.eth.personal.sign(msg, address), 
 
 ## Example usage (Server side)
 ```js
-import Web3Token from 'web3-token';
+const Web3Token = require('web3-token');
 
 // getting token from authorization header ... for example
 const token = req.headers['Authorization']
