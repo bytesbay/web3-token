@@ -1,8 +1,8 @@
 {
   "name": "web3-token",
-  "version": "0.1.21",
+  "version": "0.1.22",
   "private": false,
-  "description": "Web3 Token is a new way to authenticate users. A replacement for JWT.",
+  "description": "Web3 Token is a new way to authenticate users in hybrid dApps using signed messages.",
   "author": "bytesbay",
   "scripts": {
     "serve": "vue-cli-service serve",
