@@ -41,5 +41,13 @@ const { address, body } = await Web3Token.verify(token);
 req.user = await User.findOne({ address });
 ```
 
+## API
+
+Argument | Name | Description
+--- | --- | ---
+1 | `signer` | A function that returns a promise with signature string eg: web3.personal.sign(`data`, `address`)
+2 | `expire_in` | A string that represents a time span ([see ms module](https://github.com/vercel/ms)) or a number of milliseconds
+3 | `body` | An object that will be appended to a signature's body. Can only contain string values. 
+
 ## License
 Web3 Token is released under the MIT license. © 2021 Miroslaw Shpak
