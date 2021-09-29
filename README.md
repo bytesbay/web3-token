@@ -1,4 +1,4 @@
-![Project Presentation](resources/logo.jpg "Web3 Token")
+![Project Presentation](https://github.com/bytesbay/web3-token/raw/main/resources/logo.jpg "Web3 Token")
 
 # Web3 Token
 
