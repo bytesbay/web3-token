@@ -4,7 +4,34 @@ import parseAsHeaders from 'parse-headers';
 import toHex from 'to-hex';
 
 export const verify = token => {
-  const { body, signature } = JSON.parse(Base64.decode(token));
+
+  if(!token || !token.length) {
+    throw new Error('Token required.')
+  }
+
+  try {
+    var base64_decoded = Base64.decode(token);
+  } catch (error) {
+    throw new Error('Token malformed (must be base64 encoded)')
+  }
+
+  if(!base64_decoded || !base64_decoded.length) {
+    throw new Error('Token malformed (must be base64 encoded)')
+  }
+
+  try {
+    var { body, signature } = JSON.parse(base64_decoded);
+  } catch (error) {
+    throw new Error('Token malformed (unparsable JSON)')
+  }
+
+  if(!body || !body.length) {
+    throw new Error('Token malformed (empty message)')
+  }
+
+  if(!signature || !signature.length) {
+    throw new Error('Token malformed (empty signature)')
+  }
 
   const msgBuffer = EthUtil.toBuffer('0x' + toHex(body));
   const msgHash = EthUtil.hashPersonalMessage(msgBuffer);
@@ -25,5 +52,5 @@ export const verify = token => {
     throw new Error('Token expired')
   }
 
-  return { address, body: parsed_body }
+  return { address: address.toUpperCase(), body: parsed_body }
 }
