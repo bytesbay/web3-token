@@ -42059,6 +42059,10 @@ function eventTargetAgnosticAddListener(emitter, name, listener, flags) {
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, "sign", function() { return /* reexport */ sign; });
+__webpack_require__.d(__webpack_exports__, "verify", function() { return /* reexport */ verify_verify; });
+
 // CONCATENATED MODULE: ./node_modules/@vue/cli-service/lib/commands/build/setPublicPath.js
 // This file is imported into lib/wc client bundles.
 
@@ -42253,7 +42257,7 @@ var timespan_timeSpan = function timeSpan(val) {
 
 /**
  * 
- * @param {Web3|function} signer - The signer, may be either a Web3 instance or ethersjs instance (in future)
+ * @param {function} signer - The signer function, must return Promise<string>
  * @param {any} body - Body to add to the sign
  */
 
@@ -42295,20 +42299,24 @@ var sign = /*#__PURE__*/function () {
             break;
 
           case 12:
-            new Error('"signer" argument should be a function that returns a signature eg: "msg => web3.eth.personal.sign(msg, <YOUR_ADDRESS>)"');
+            throw new Error('"signer" argument should be a function that returns a signature eg: "msg => web3.eth.personal.sign(msg, <YOUR_ADDRESS>)"');
 
           case 13:
-            if (typeof signer !== 'string') {
-              new Error('"signer" argument should return a Promise that returns signature string');
+            if (!(typeof signature !== 'string')) {
+              _context.next = 15;
+              break;
             }
 
+            throw new Error('"signer" argument should be a function that returns a signature string (Promise<string>)');
+
+          case 15:
             token = base64_default.a.encode(JSON.stringify({
               signature: signature,
               body: msg
             }));
             return _context.abrupt("return", token);
 
-          case 16:
+          case 17:
           case "end":
             return _context.stop();
         }
@@ -42321,7 +42329,23 @@ var sign = /*#__PURE__*/function () {
   };
 }();
 
-var validateInput = function validateInput(body) {};
+var validateInput = function validateInput(body) {
+  for (var key in body) {
+    var field = body[key];
+
+    if (key === 'Expire-Date') {
+      throw new Error('Please do not rewrite "Expire-Date" field');
+    }
+
+    if (key === 'Web3-Token-Version') {
+      throw new Error('Please do not rewrite "Web3-Token-Version" field');
+    }
+
+    if (typeof field !== 'string') {
+      throw new Error('Body can only contain string values');
+    }
+  }
+};
 
 var buildMessage = function buildMessage(data) {
   var message = [];
@@ -42349,9 +42373,35 @@ var to_hex_default = /*#__PURE__*/__webpack_require__.n(to_hex);
 
 
 var verify_verify = function verify(token) {
-  var _JSON$parse = JSON.parse(base64_default.a.decode(token)),
-      body = _JSON$parse.body,
-      signature = _JSON$parse.signature;
+  if (!token || !token.length) {
+    throw new Error('Token required.');
+  }
+
+  try {
+    var base64_decoded = base64_default.a.decode(token);
+  } catch (error) {
+    throw new Error('Token malformed (must be base64 encoded)');
+  }
+
+  if (!base64_decoded || !base64_decoded.length) {
+    throw new Error('Token malformed (must be base64 encoded)');
+  }
+
+  try {
+    var _JSON$parse = JSON.parse(base64_decoded),
+        body = _JSON$parse.body,
+        signature = _JSON$parse.signature;
+  } catch (error) {
+    throw new Error('Token malformed (unparsable JSON)');
+  }
+
+  if (!body || !body.length) {
+    throw new Error('Token malformed (empty message)');
+  }
+
+  if (!signature || !signature.length) {
+    throw new Error('Token malformed (empty signature)');
+  }
 
   var msgBuffer = dist_browser["toBuffer"]('0x' + to_hex_default()(body));
   var msgHash = dist_browser["hashPersonalMessage"](msgBuffer);
@@ -42359,7 +42409,7 @@ var verify_verify = function verify(token) {
   var signatureParams = dist_browser["fromRpcSig"](signatureBuffer);
   var publicKey = dist_browser["ecrecover"](msgHash, signatureParams.v, signatureParams.r, signatureParams.s);
   var addressBuffer = dist_browser["publicToAddress"](publicKey);
-  var address = dist_browser["bufferToHex"](addressBuffer);
+  var address = dist_browser["bufferToHex"](addressBuffer).toUpperCase();
   var parsed_body = parse_headers_default()(body);
 
   if (parsed_body['expire-date'] && new Date(parsed_body['expire-date']) < new Date()) {
@@ -42367,7 +42417,7 @@ var verify_verify = function verify(token) {
   }
 
   return {
-    address: address,
+    address: address.toUpperCase(),
     body: parsed_body
   };
 };
@@ -42379,6 +42429,7 @@ var Web3Token = {
   verify: verify_verify
 };
 /* harmony default export */ var lib = (Web3Token);
+
 // CONCATENATED MODULE: ./node_modules/@vue/cli-service/lib/commands/build/entry-lib.js
 
 
