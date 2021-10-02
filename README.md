@@ -44,7 +44,7 @@ req.user = await User.findOne({ address });
 ## API
 
 Argument | Name | Description | Required | Example
---- | --- | ---
+--- | --- | --- | --- | ---
 1 | `signer` | A function that returns a promise with signature string eg: web3.personal.sign(`data`, `address`) | `required` | `(body) => web3.personal.sign(body, 0x23..1234)`
 2 | `expire_in` | A string that represents a time span ([see ms module](https://github.com/vercel/ms)) or a number of milliseconds | `optional` (default: `1d`) | `1 day`
 3 | `body` | An object that will be appended to a signature's body. Can only contain string values. Can be used for some custom data. | `optional` | `{ 'Custom-data': 'some custom data' }`
