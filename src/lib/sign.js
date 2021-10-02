@@ -3,7 +3,7 @@ import { timeSpan } from './timespan';
 
 /**
  * 
- * @param {Web3|function} signer - The signer, may be either a Web3 instance or ethersjs instance (in future)
+ * @param {function} signer - The signer function, must return Promise<string>
  * @param {any} body - Body to add to the sign
  */
 export const sign = async (signer, expires_in = '1w', body = {}) => {
@@ -23,11 +23,11 @@ export const sign = async (signer, expires_in = '1w', body = {}) => {
   if(typeof signer === 'function') {
     var signature = await signer(msg);
   } else {
-    new Error('"signer" argument should be a function that returns a signature eg: "msg => web3.eth.personal.sign(msg, <YOUR_ADDRESS>)"')
+    throw new Error('"signer" argument should be a function that returns a signature eg: "msg => web3.eth.personal.sign(msg, <YOUR_ADDRESS>)"')
   }
 
-  if(typeof signer !== 'string') {
-    new Error('"signer" argument should return a Promise that returns signature string')
+  if(typeof signature !== 'string') {
+    throw new Error('"signer" argument should be a function that returns a signature string (Promise<string>)')
   }
 
   const token = Base64.encode(JSON.stringify({
@@ -40,7 +40,22 @@ export const sign = async (signer, expires_in = '1w', body = {}) => {
 
 
 const validateInput = body => {
+  for (const key in body) {
 
+    const field = body[key]
+
+    if(key === 'Expire-Date') {
+      throw new Error('Please do not rewrite "Expire-Date" field');
+    }
+
+    if(key === 'Web3-Token-Version') {
+      throw new Error('Please do not rewrite "Web3-Token-Version" field');
+    }
+
+    if(typeof field !== 'string') {
+      throw new Error('Body can only contain string values');
+    }
+  }
 };
 
 const buildMessage = data => {

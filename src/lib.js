@@ -7,3 +7,4 @@ const Web3Token = {
 }
 
 export default Web3Token;
+export { sign, verify };
