@@ -73,9 +73,9 @@
     "not dead"
   ],
   "bugs": {
-    "url": "https://github.com/bytesbay/web-token/issues"
+    "url": "https://github.com/bytesbay/web3-token/issues"
   },
-  "homepage": "https://github.com/bytesbay/web-token#readme",
+  "homepage": "https://github.com/bytesbay/web3-token#readme",
   "keywords": [
     "auth",
     "token",
@@ -87,6 +87,6 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bytesbay/web-token.git"
+    "url": "git+https://github.com/bytesbay/web3-token.git"
   }
 }
