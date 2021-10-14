@@ -1,6 +1,6 @@
 {
   "name": "web3-token",
-  "version": "0.1.28",
+  "version": "0.1.29",
   "private": false,
   "description": "Web3 Token is a new way to authenticate users in hybrid dApps using signed messages.",
   "author": "bytesbay",
@@ -10,7 +10,7 @@
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint"
   },
-  "main": "dist/web-token.common.js",
+  "main": "dist/web3-token.common.js",
   "dependencies": {
     "base-64": "^1.0.0",
     "bignumber.js": "^9.0.1",
