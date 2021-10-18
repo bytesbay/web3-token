@@ -42409,7 +42409,7 @@ var verify_verify = function verify(token) {
   var signatureParams = dist_browser["fromRpcSig"](signatureBuffer);
   var publicKey = dist_browser["ecrecover"](msgHash, signatureParams.v, signatureParams.r, signatureParams.s);
   var addressBuffer = dist_browser["publicToAddress"](publicKey);
-  var address = dist_browser["bufferToHex"](addressBuffer).toUpperCase();
+  var address = dist_browser["bufferToHex"](addressBuffer);
   var parsed_body = parse_headers_default()(body);
 
   if (parsed_body['expire-date'] && new Date(parsed_body['expire-date']) < new Date()) {
@@ -42417,7 +42417,7 @@ var verify_verify = function verify(token) {
   }
 
   return {
-    address: address.toUpperCase(),
+    address: address.toLowerCase(),
     body: parsed_body
   };
 };

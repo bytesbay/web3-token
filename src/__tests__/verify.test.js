@@ -11,7 +11,7 @@ const ethers_signer = new Ethers.Wallet(
 describe('Verify method', () => {
 
   let token = '';
-  let real_address = ethers_signer.address.toUpperCase();
+  let real_address = ethers_signer.address.toLowerCase();
   const custom_field_value = 'some custom value'
 
   it('prepearing token', async () => {

@@ -44,7 +44,7 @@ export const verify = token => {
     signatureParams.s
   );
   const addressBuffer = EthUtil.publicToAddress(publicKey);
-  const address = EthUtil.bufferToHex(addressBuffer).toUpperCase();
+  const address = EthUtil.bufferToHex(addressBuffer);
 
   const parsed_body = parseAsHeaders(body);
 
@@ -52,5 +52,5 @@ export const verify = token => {
     throw new Error('Token expired')
   }
 
-  return { address: address.toUpperCase(), body: parsed_body }
+  return { address: address.toLowerCase(), body: parsed_body }
 }
