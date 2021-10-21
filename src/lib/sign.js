@@ -6,7 +6,7 @@ import { timeSpan } from './timespan';
  * @param {function} signer - The signer function, must return Promise<string>
  * @param {any} body - Body to add to the sign
  */
-export const sign = async (signer, expires_in = '1w', body = {}) => {
+export const sign = async (signer, expires_in = '1d', body = {}) => {
 
   const expires_in_date = timeSpan(expires_in);
 

@@ -16,7 +16,7 @@ import Web3Token from 'web3-token';
 
 // Connection to MetaMask wallet
 const web3 = new Web3(ethereum);
-await ethereum.enable();
+await ethereum.request({ method: 'eth_requestAccounts'});
 
 // getting address from which we will sign message
 const address = (await web3.eth.getAccounts())[0];
@@ -40,6 +40,45 @@ const { address, body } = await Web3Token.verify(token);
 // (better to do it case insensitive)
 req.user = await User.findOne({ address });
 ```
+
+---
+
+## Handle exceptions
+
+```js
+const generateToken = async () => {
+  if (!window.ethereum) {
+    return console.log('Please install and activate the metamask extension!');
+  }
+
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  const signer = provider.getSigner();
+
+  try {
+    return await Web3Token.sign(async msg => {
+      try {
+        return await signer.signMessage(msg);
+      }
+      catch (err) {
+        const { reason } = err;
+        if (reason === "unknown account #0") {
+          return console.log('Have you unlocked metamask and are connected to this page?')
+        }
+
+        console.log(err.toString());
+      }
+    }, '1d');
+  }
+  catch (err) {
+    if (/returns a signature/.test(err.toString())) {
+      return;
+    }
+    console.log(err.toString());
+  }
+}
+```
+
+---
 
 ## API
 

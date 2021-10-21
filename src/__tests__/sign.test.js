@@ -1,4 +1,4 @@
-import { sign, verify } from '@/lib';
+import { sign } from '@/lib';
 import { ethers as Ethers } from 'ethers';
 
 const mnemonic_instance = Ethers.Wallet.fromMnemonic(process.env['ACCOUNT_MNEMONIC']);
