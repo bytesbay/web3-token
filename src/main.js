@@ -4,7 +4,7 @@ const test = async () => {
 
   // Connection to MetaMask wallet
   const web3 = new Web3(ethereum);
-  await ethereum.enable();
+  await ethereum.request({ method: 'eth_requestAccounts'});
 
   // getting address from which we will sign message
   const your_address = (await web3.eth.getAccounts())[0];
