@@ -23,7 +23,7 @@ $ npm i web3-token ethers
 
 ## Example usage (Client side)
 
-[web3](https://www.npmjs.com/package/web3):
+Using [Web3](https://www.npmjs.com/package/web3) package:
 
 ```js
 import Web3 from 'web3';
@@ -42,7 +42,7 @@ const token = await Web3Token.sign(msg => web3.eth.personal.sign(msg, address), 
 // attaching token to authorization header ... for example
 ```
 
-[ethers](https://www.npmjs.com/package/ethers):
+Using [Ethers](https://www.npmjs.com/package/ethers) package:
 
 ```js
 import { ethers } from "ethers";
