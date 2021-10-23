@@ -4,14 +4,29 @@
 
 Web3 Token is a new way to authenticate users. A replacement for JWT in hybrid dApps. See [this article](https://medium.com/@bytesbay/you-dont-need-jwt-anymore-974aa6196976) for more info (later I'll add this info to this readme).
 
+---
 ## Install
+
+With [web3](https://www.npmjs.com/package/web3) package:
+
 ```bash
-$ npm i web3-token
+$ npm i web3-token web3
 ```
+
+or with [ethers](https://www.npmjs.com/package/ethers) package:
+
+```bash
+$ npm i web3-token ethers
+```
+
+---
 
 ## Example usage (Client side)
 
+[web3](https://www.npmjs.com/package/web3):
+
 ```js
+import Web3 from 'web3';
 import Web3Token from 'web3-token';
 
 // Connection to MetaMask wallet
@@ -27,6 +42,24 @@ const token = await Web3Token.sign(msg => web3.eth.personal.sign(msg, address), 
 // attaching token to authorization header ... for example
 ```
 
+[ethers](https://www.npmjs.com/package/ethers):
+
+```js
+import { ethers } from "ethers";
+import Web3Token from 'web3-token';
+
+// Connection to MetaMask wallet
+const provider = new ethers.providers.Web3Provider(window.ethereum);
+const signer = provider.getSigner();
+
+// generating a token with 1 day of expiration time
+const token = await Web3Token.sign(async msg => await signer.signMessage(msg), '1d');
+
+// attaching token to authorization header ... for example
+```
+
+---
+
 ## Example usage (Server side)
 ```js
 const Web3Token = require('web3-token');
@@ -41,6 +74,8 @@ const { address, body } = await Web3Token.verify(token);
 req.user = await User.findOne({ address });
 ```
 
+---
+
 ## API
 
 Argument | Name | Description | Required | Example
@@ -48,6 +83,8 @@ Argument | Name | Description | Required | Example
 1 | `signer` | A function that returns a promise with signature string eg: web3.personal.sign(`data`, `address`) | `required` | `(body) => web3.personal.sign(body, 0x23..1234)`
 2 | `expire_in` | A string that represents a time span ([see ms module](https://github.com/vercel/ms)) or a number of milliseconds | `optional` (default: `1d`) | `1 day`
 3 | `body` | An object that will be appended to a signature's body. Can only contain string values. Can be used for some custom data. | `optional` | `{ 'Custom-data': 'some custom data' }`
+
+---
 
 ## License
 Web3 Token is released under the MIT license. © 2021 Miroslaw Shpak
