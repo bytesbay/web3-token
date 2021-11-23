@@ -1,4 +1,3 @@
-import Base64 from 'base-64';
 import { timeSpan } from './timespan';
 
 /**
@@ -30,10 +29,10 @@ export const sign = async (signer, expires_in = '1d', body = {}) => {
     throw new Error('"signer" argument should be a function that returns a signature string (Promise<string>)')
   }
 
-  const token = Base64.encode(JSON.stringify({
+  const token = Buffer.from(JSON.stringify({
     signature,
     body: msg,
-  }))
+  })).toString('base64')
 
   return token;
 }

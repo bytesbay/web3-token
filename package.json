@@ -12,7 +12,6 @@
   },
   "main": "dist/web3-token.common.js",
   "dependencies": {
-    "base-64": "^1.0.0",
     "bignumber.js": "^9.0.1",
     "ethereumjs-util": "^7.1.0",
     "ms": "^2.1.3",
