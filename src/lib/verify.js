@@ -1,4 +1,3 @@
-import Base64 from 'base-64';
 import * as EthUtil from 'ethereumjs-util';
 import parseAsHeaders from 'parse-headers';
 import toHex from 'to-hex';
@@ -10,7 +9,7 @@ export const verify = token => {
   }
 
   try {
-    var base64_decoded = Base64.decode(token);
+    var base64_decoded = Buffer.from(token, 'base64').toString('utf8');
   } catch (error) {
     throw new Error('Token malformed (must be base64 encoded)')
   }
