@@ -8,28 +8,59 @@ const ethers_signer = new Ethers.Wallet(
   ethers_provider
 );
 
+const default_token = {
+  domain: 'worldofdefish.com',
+  statement: 'Test',
+  expiration_time: new Date(Date.now() + (3600 * 1000)),
+  not_before: new Date(Date.now() - 1),
+}
+
 describe('Verify method', () => {
 
-  let token = '';
   let real_address = ethers_signer.address.toLowerCase();
-  const custom_field_value = 'some custom value'
-
-  it('prepearing token', async () => {
-    token = await sign(body => ethers_signer.signMessage(body), '1d', {
-      'Custom-field': custom_field_value
-    });
-
-    expect(token).toBeTruthy();
-  });
 
   it('must verify a signature', async () => {
+    const token = await sign(body => ethers_signer.signMessage(body), { ...default_token })
+
     const { address, body } = await verify(token);
 
     expect(address).toEqual(real_address);
-    expect(body['custom-field']).toEqual(custom_field_value);
+    expect(body['statement']).toEqual(default_token.statement);
+    expect(body['domain']).toEqual(default_token.domain);
   });
 
-  it('must verify a signature', async () => {
+  it('must throw an error coz of past expiration_time', async () => {
+
+    const token = await sign(body => ethers_signer.signMessage(body), {
+      ...default_token,
+      expiration_time: new Date(Date.now() - 1)
+    })
+
+    const { address, body } = await verify(token);
+
+    expect(address).toEqual(real_address);
+  });
+
+  it('must throw an error coz of future not_before date', async () => {
+
+    const token = await sign(body => ethers_signer.signMessage(body), {
+      ...default_token,
+      not_before: new Date(Date.now() + (3600 * 1000))
+    })
+
+    expect(() => verify(token)).toThrowError()
+  });
+
+  it('must throw an error coz of diff domains', async () => {
+
+    const token = await sign(body => ethers_signer.signMessage(body), {
+      ...default_token
+    })
+
+    expect(() => verify(token, { domain: 'qwe.qwe' })).toThrowError()
+  });
+
+  it('must throw error of malformed token', async () => {
     expect(() => verify('qweqwe')).toThrowError()
   });
 })

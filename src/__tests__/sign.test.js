@@ -14,33 +14,97 @@ describe('Sign method', () => {
   const custom_field_value = 'some custom value'
 
   it('generate token', async () => {
-    token = await sign(body => ethers_signer.signMessage(body));
-
-    expect(token).toBeTruthy();
-  });
-
-
-  it('generate token with custom body data', async () => {
-    token = await sign(body => ethers_signer.signMessage(body), '1d', {
-      'Custom-field': custom_field_value
+    token = await sign(body => ethers_signer.signMessage(body), {
+      domain: 'worldofdefish.com',
     });
 
     expect(token).toBeTruthy();
   });
 
 
-  it('throw error that body must contain only strings', async () => {
+  it('generate token with defined expires_in (in params list)', async () => {
+    token = await sign(body => ethers_signer.signMessage(body), {
+      expires_in: '1d',
+    });
 
-    expect(
-      sign(body => ethers_signer.signMessage(body), '1d', {
-        'Custom-field': { kek: 'qwe' }
+    expect(token).toBeTruthy();
+  });
+
+
+  it('throw error because of invalid expires_in', async () => {
+
+    await expect(
+      sign(body => ethers_signer.signMessage(body), {
+        domain: 'worldofdefish.com',
+        expires_in: 'asd',
       })
     ).rejects.toThrowError()
   });
 
 
+  it('throw error because of invalid chain_id', async () => {
+
+    await expect(
+      sign(body => ethers_signer.signMessage(body), {
+        domain: 'worldofdefish.com',
+        chain_id: 'ssssa23dsa',
+      })
+    ).rejects.toThrowError()
+  });
+
+
+  it('throw error because of invalid uri', async () => {
+
+    await expect(
+      sign(body => ethers_signer.signMessage(body), {
+        domain: 'worldofdefish.com',
+        uri: 'local.com',
+      })
+    ).rejects.toThrowError()
+  });
+
+
+  it('generate token with defined expiration_time and should overwrite expires_in param', async () => {
+
+    token = await sign(body => ethers_signer.signMessage(body), {
+      domain: 'worldofdefish.com',
+      expiration_time: new Date(),
+      expires_in: '1d',
+    })
+
+    expect(token).toBeTruthy();
+  });
+
+
+  it('generate token with defined statement and domain', async () => {
+
+    token = await sign(body => ethers_signer.signMessage(body), {
+      domain: 'worldofdefish.com',
+      statement: 'Test',
+      expiration_time: new Date(),
+      expires_in: '1d',
+      not_before: new Date(),
+    })
+
+    expect(token).toBeTruthy();
+  });
+
+
+  it('generate token with defined statement without domain', async () => {
+
+    token = await sign(body => ethers_signer.signMessage(body), {
+      expiration_time: new Date(),
+      expires_in: '1d',
+      statement: 'Test',
+      not_before: new Date(),
+    })
+
+    expect(token).toBeTruthy();
+  });
+
+
   it('throw error signer must be a function', async () => {
 
-    expect(sign('qwe')).rejects.toThrowError();
+    await expect(sign('qwe')).rejects.toThrowError();
   });
 })

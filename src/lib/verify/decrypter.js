@@ -1,19 +1,19 @@
-import Base64 from 'base-64';
+import Base64 from 'base-64'
 import * as EthUtil from 'ethereumjs-util';
-import parseAsHeaders from 'parse-headers';
 import toHex from 'to-hex';
 
-export const verify = token => {
+const getVersion = body => {
+  const [ str ] = body.match(/Web3[\s-]+Token[\s-]+Version: \d/);
 
+  return Number(str.replace(' ', '').split(':')[1]);
+}
+
+export const decrypt = token => {
   if(!token || !token.length) {
     throw new Error('Token required.')
   }
 
-  try {
-    var base64_decoded = Base64.decode(token);
-  } catch (error) {
-    throw new Error('Token malformed (must be base64 encoded)')
-  }
+  var base64_decoded = Base64.decode(token);
 
   if(!base64_decoded || !base64_decoded.length) {
     throw new Error('Token malformed (must be base64 encoded)')
@@ -44,13 +44,9 @@ export const verify = token => {
     signatureParams.s
   );
   const addressBuffer = EthUtil.publicToAddress(publicKey);
-  const address = EthUtil.bufferToHex(addressBuffer);
+  const address = EthUtil.bufferToHex(addressBuffer).toLowerCase();
 
-  const parsed_body = parseAsHeaders(body);
+  const version = getVersion(body);
 
-  if(parsed_body['expire-date'] && new Date(parsed_body['expire-date']) < new Date()) {
-    throw new Error('Token expired')
-  }
-
-  return { address: address.toLowerCase(), body: parsed_body }
+  return { version, address, body, signature }
 }

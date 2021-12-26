@@ -10,11 +10,15 @@ const test = async () => {
   const your_address = (await web3.eth.getAccounts())[0];
 
   // getting a token
-  const token = await Web3Token.sign(msg => web3.eth.personal.sign(msg, your_address), '1d');
+  const token = await Web3Token.sign(msg => web3.eth.personal.sign(msg, your_address), {
+    domain: 'worldofdefish.com',
+    statement: 'Hey guys!',
+    not_before: new Date(Date.now() - (24 * 60 * 60 * 1000)),
+  });
 
   console.log('TOKEN CREATED', token);
 
-  const { address, body } = await Web3Token.verify(token);
+  const { address, body } = await Web3Token.verify(token, { domain: 'worldofdefish.com' });
 
   console.log('ADDRESS RECOVERED', address, body);
 }

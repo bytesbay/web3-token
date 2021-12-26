@@ -2,7 +2,11 @@
 
 # Web3 Token
 
-Web3 Token is a new way to authenticate users. A replacement for JWT in hybrid dApps. See [this article](https://medium.com/@bytesbay/you-dont-need-jwt-anymore-974aa6196976) for more info (later I'll add this info to this readme).
+Web3 Token is a new way to authenticate users. See [this article](https://medium.com/@bytesbay/you-dont-need-jwt-anymore-974aa6196976) for more info (later I'll add this info to this readme).
+
+## Version 2 updates 🎉
+- I'm now 90% following [EIP-4361](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-4361.md). Why 90%? Because i don't like some things in that standard that makes it more difficult to use it for developers.
+- `body` (3rd parameter) is now deprecated.
 
 ---
 ## Install
@@ -111,15 +115,51 @@ const generateToken = async () => {
 }
 ```
 
+## Advanced usage with options (Client&Server side)
+```js
+
+// I assume here a lot of things to be imported 😀
+
+const token = await Web3Token.sign(async msg => await signer.signMessage(msg), {
+  domain: 'worldofdefish.com',
+  statement: 'I accept the WoD Terms of Service: https://service.org/tos',
+  expire_in: '3 days',
+  // won't be able to use this token for one hour
+  not_before: new Date(Date.now() + (3600 * 1000)),
+  nonce: 11111111,
+});
+
+const { address, body } = await Web3Token.verify(token, {
+  // verify that received token is signed only for our domain
+  domain: 'worldofdefish.com'
+});
+
+```
+
 ---
 
 ## API
 
-Argument | Name | Description | Required | Example
---- | --- | --- | --- | ---
-1 | `signer` | A function that returns a promise with signature string eg: web3.personal.sign(`data`, `address`) | `required` | `(body) => web3.personal.sign(body, 0x23..1234)`
-2 | `expire_in` | A string that represents a time span ([see ms module](https://github.com/vercel/ms)) or a number of milliseconds | `optional` (default: `1d`) | `1 day`
-3 | `body` | An object that will be appended to a signature's body. Can only contain string values. Can be used for some custom data. | `optional` | `{ 'Custom-data': 'some custom data' }`
+### sign(signer, options)
+Name | Description | Required | Example
+--- | --- | --- | ---
+`signer` | A function that returns a promise with signature string eg: web3.personal.sign(`data`, `address`) | `required` | `(body) => web3.personal.sign(body, '0x23..1234')`
+`options` | An options object or, if passed a string, will be used as an `expire_in` option | `optional` (default: `'1d'`) | `{}` or `'1 day'`
+`options.expire_in` | A string that represents a time span ([see ms module](https://github.com/vercel/ms)) or a number of milliseconds | `optional` (default: `1d`) | `'1 day'`
+`options.not_before` | A date after which the token becomes usable | `optional` | `new Date('12-12-2012')`
+`options.expiration_time` | A date till when token is valid. Overwrites `expire_in` parameter | `optional` | `new Date('12-12-2012')`
+`options.statement` | A human-readable ASCII assertion that the user will sign, and it must not contain `'\n'` | `optional` | `'I accept the ServiceOrg Terms of Service: https://service.org/tos'`
+`options.domain` | Authority that is requesting the signing. | `optional`(Unless verifier won't ask for it) | `'example.com'`
+`options.nonce` | A randomized token used to prevent replay attacks, at least 8 alphanumeric characters. | `optional` | `12345678`
+`options.request_id` | A system-specific identifier that may be used to uniquely refer to the sign-in request. | `optional` | `231`
+
+
+### verify(token, options)
+Name | Description | Required | Example
+--- | --- | --- | ---
+`signer` | A function that returns a promise with signature string eg: web3.personal.sign(`data`, `address`) | `required` | `(body) => web3.personal.sign(body, 0x23..1234)`
+`options` | An options object | `optional` | `{ domain: 'example.com' }`
+`options.domain` | The domain you want to accept | `optional` | `'example.com'`
 
 ---
 

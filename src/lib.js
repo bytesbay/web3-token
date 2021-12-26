@@ -1,5 +1,5 @@
-import { sign } from './lib/sign';
-import { verify } from './lib/verify';
+import { sign } from './lib/sign/sign';
+import { verify } from './lib/verify/verify';
 
 const Web3Token = {
   sign,
