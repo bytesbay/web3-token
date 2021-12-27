@@ -2,7 +2,7 @@
 
 # Web3 Token
 
-Web3 Token is a new way to authenticate users. See [this article](https://medium.com/@bytesbay/you-dont-need-jwt-anymore-974aa6196976) for more info (later I'll add this info to this readme).
+Web3 Token is a new way to authenticate users. See [this article](https://medium.com/@bytesbay/you-dont-need-jwt-anymore-974aa6196976) for more info (later I'll add this info to this readme). Implementation of [EIP-4361](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-4361.md).
 
 ## Version 2 updates 🎉
 - I'm now 90% following [EIP-4361](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-4361.md). Why 90%? Because i don't like some things in that standard that makes it more difficult to use it for developers.
