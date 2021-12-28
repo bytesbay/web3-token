@@ -157,7 +157,7 @@ Name | Description | Required | Example
 ### verify(token, options)
 Name | Description | Required | Example
 --- | --- | --- | ---
-`signer` | A function that returns a promise with signature string eg: web3.personal.sign(`data`, `address`) | `required` | `(body) => web3.personal.sign(body, 0x23..1234)`
+`token` | A token string that is generated from `sign()` | `required` | `...`
 `options` | An options object | `optional` | `{ domain: 'example.com' }`
 `options.domain` | The domain you want to accept | `optional` | `'example.com'`
 
