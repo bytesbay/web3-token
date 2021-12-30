@@ -2,11 +2,11 @@ type Signer = (msg: string) => PromiseLike<string>
 
 export function sign(
     signer: Signer,
-    expires_in?: string | number,
-    body?: Object): PromiseLike<string>
+    opts?: string | number | Object): PromiseLike<string>
 
 export function verify(
-    token: string
+    token: string,
+    opts?: Object
 ): {
     address: string,
     body: Object

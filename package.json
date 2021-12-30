@@ -1,6 +1,6 @@
 {
   "name": "web3-token",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "private": false,
   "description": "Web3 Token is a new way to authenticate users in hybrid dApps using signed messages. Implementation of EIP-4361",
   "author": "bytesbay",
