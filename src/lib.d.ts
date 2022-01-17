@@ -1,20 +1,37 @@
-type Signer = (msg: string) => PromiseLike<string>
+declare module "web3-token" {
+  type Signer = (msg: string) => PromiseLike<string>;
 
-export function sign(
+  interface VerifyOpts {
+    domain?: string;
+  }
+  interface SignOpts extends VerifyOpts {
+    expires_in?: string;
+    not_before?: Date;
+    expiration_time?: Date;
+    statement?: string;
+    nonce?: string;
+    request_id?: string;
+  }
+  interface VerifyBody extends Record<string, string | string[]> {
+    domain?: string;
+    statement?: string;
+  }
+
+  export function sign(
     signer: Signer,
-    opts?: string | number | Object): PromiseLike<string>
+    opts?: string | number | SignOpts
+  ): PromiseLike<string>;
 
-export function verify(
+  export function verify(
     token: string,
-    opts?: Object
-): {
-    address: string,
-    body: Object
-}
+    opts?: VerifyOpts
+  ): {
+    address: string;
+    body: VerifyBody;
+  };
 
-declare const Web3Token: {
-    sign: typeof sign,
-    verify: typeof verify
+  export default interface Web3Token {
+    sign: typeof sign;
+    verify: typeof verify;
+  }
 }
-
-export default Web3Token
