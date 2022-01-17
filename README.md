@@ -145,7 +145,7 @@ Name | Description | Required | Example
 --- | --- | --- | ---
 `signer` | A function that returns a promise with signature string eg: web3.personal.sign(`data`, `address`) | `required` | `(body) => web3.personal.sign(body, '0x23..1234')`
 `options` | An options object or, if passed a string, will be used as an `expire_in` option | `optional` (default: `'1d'`) | `{}` or `'1 day'`
-`options.expire_in` | A string that represents a time span ([see ms module](https://github.com/vercel/ms)) or a number of milliseconds | `optional` (default: `1d`) | `'1 day'`
+`options.expires_in` | A string that represents a time span ([see ms module](https://github.com/vercel/ms)) or a number of milliseconds | `optional` (default: `1d`) | `'1 day'`
 `options.not_before` | A date after which the token becomes usable | `optional` | `new Date('12-12-2012')`
 `options.expiration_time` | A date till when token is valid. Overwrites `expire_in` parameter | `optional` | `new Date('12-12-2012')`
 `options.statement` | A human-readable ASCII assertion that the user will sign, and it must not contain `'\n'` | `optional` | `'I accept the ServiceOrg Terms of Service: https://service.org/tos'`
