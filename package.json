@@ -6,11 +6,12 @@
   "author": "bytesbay",
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --target lib src/lib.js",
+    "build": "vue-cli-service build --target lib src/lib.js && cp src/lib.d.ts dist/web3-token.d.ts",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint"
   },
   "main": "dist/web3-token.common.js",
+  "types": "dist/web3-token.d.ts",
   "dependencies": {
     "base-64": "^1.0.0",
     "bignumber.js": "^9.0.1",
