@@ -76,7 +76,7 @@ export const verify = (token, params = {}) => {
 
   const parsed_body = parseBody(lines);
 
-  if(new Date(parsed_body['expiration-date']) < new Date()) {
+  if(new Date(parsed_body['expiration-time']) < new Date()) {
     throw new Error('Token expired')
   }
 
