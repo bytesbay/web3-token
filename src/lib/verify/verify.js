@@ -66,7 +66,7 @@ const parseBody = lines => {
 
 export const verify = (token, params = {}) => {
 
-  const { version, address, body, signature } = decrypt(token);
+  const { version, address, body } = decrypt(token);
 
   if(version === 1) {
     throw new Error('Tokens version 1 are not supported by the current version of module')

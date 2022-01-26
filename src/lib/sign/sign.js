@@ -2,7 +2,7 @@ import Base64 from 'base-64';
 import { timeSpan } from '../timespan';
 
 function isDomain(val) {
-  const domain_regex = /^(?!(https:\/\/|http:\/\/|www\.|mailto:|smtp:|ftp:\/\/|ftps:\/\/))(((([a-zA-Z0-9])|([a-zA-Z0-9][a-zA-Z0-9\-]{0,86}[a-zA-Z0-9]))\.(([a-zA-Z0-9])|([a-zA-Z0-9][a-zA-Z0-9\-]{0,73}[a-zA-Z0-9]))\.(([a-zA-Z0-9]{2,12}\.[a-zA-Z0-9]{2,12})|([a-zA-Z0-9]{2,25})))|((([a-zA-Z0-9])|([a-zA-Z0-9][a-zA-Z0-9\-]{0,162}[a-zA-Z0-9]))\.(([a-zA-Z0-9]{2,12}\.[a-zA-Z0-9]{2,12})|([a-zA-Z0-9]{2,25}))))$/g;
+  const domain_regex = /^(?!(https:\/\/|http:\/\/|www\.|mailto:|smtp:|ftp:\/\/|ftps:\/\/))(((([a-zA-Z0-9])|([a-zA-Z0-9][a-zA-Z0-9-]{0,86}[a-zA-Z0-9]))\.(([a-zA-Z0-9])|([a-zA-Z0-9][a-zA-Z0-9-]{0,73}[a-zA-Z0-9]))\.(([a-zA-Z0-9]{2,12}\.[a-zA-Z0-9]{2,12})|([a-zA-Z0-9]{2,25})))|((([a-zA-Z0-9])|([a-zA-Z0-9][a-zA-Z0-9-]{0,162}[a-zA-Z0-9]))\.(([a-zA-Z0-9]{2,12}\.[a-zA-Z0-9]{2,12})|([a-zA-Z0-9]{2,25}))))$/g;
   return domain_regex.test(val);
 }
 
@@ -69,11 +69,11 @@ const validateParams = params => {
     throw new Error('chain_id must be an int');
   }
 
-  if(params.expiration_time && !params.expiration_time instanceof Date) {
+  if(params.expiration_time && !(params.expiration_time instanceof Date)) {
     throw new Error('expiration_time must be an instance of Date');
   }
 
-  if(params.not_before && !params.expiration_time instanceof Date) {
+  if(params.not_before && !(params.expiration_time instanceof Date)) {
     throw new Error('expiration_time must be an instance of Date');
   }
 };
