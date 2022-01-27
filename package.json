@@ -39,6 +39,10 @@
     "env": {
       "node": true
     },
+    "globals": {
+      "Web3": "readonly",
+      "ethereum": "readonly"
+    },
     "extends": [
       "plugin:vue/essential",
       "eslint:recommended"

@@ -11,7 +11,6 @@ const ethers_signer = new Ethers.Wallet(
 describe('Sign method', () => {
 
   let token = '';
-  const custom_field_value = 'some custom value'
 
   it('generate token', async () => {
     token = await sign(body => ethers_signer.signMessage(body), {
