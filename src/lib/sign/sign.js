@@ -103,7 +103,7 @@ const processParams = params => {
     params.chain_id = parseInt(Number(params.chain_id));
   }
 
-  if(!params.uri && window?.location?.href) {
+  if(!params.uri && typeof window !== 'undefined' && window?.location?.href) {
     params.uri = window.location.href;
   }
 

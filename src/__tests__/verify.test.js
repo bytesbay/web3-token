@@ -36,9 +36,7 @@ describe('Verify method', () => {
       expiration_time: new Date(Date.now() - 1)
     })
 
-    const { address } = await verify(token);
-
-    expect(address).toEqual(real_address);
+    expect(() => verify(token)).toThrowError()
   });
 
   it('must throw an error coz of future not_before date', async () => {
