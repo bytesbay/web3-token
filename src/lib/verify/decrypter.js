@@ -1,5 +1,12 @@
 import Base64 from 'base-64'
-import * as EthUtil from 'ethereumjs-util';
+import {
+  hashPersonalMessage,
+  toBuffer,
+  fromRpcSig,
+  ecrecover,
+  publicToAddress,
+  bufferToHex
+} from 'ethereumjs-util';
 import toHex from 'to-hex';
 
 const getVersion = body => {
@@ -33,18 +40,18 @@ export const decrypt = token => {
     throw new Error('Token malformed (empty signature)')
   }
 
-  const msgBuffer = EthUtil.toBuffer('0x' + toHex(body));
-  const msgHash = EthUtil.hashPersonalMessage(msgBuffer);
-  const signatureBuffer = EthUtil.toBuffer(signature);
-  const signatureParams = EthUtil.fromRpcSig(signatureBuffer);
-  const publicKey = EthUtil.ecrecover(
+  const msgBuffer = toBuffer('0x' + toHex(body));
+  const msgHash = hashPersonalMessage(msgBuffer);
+  const signatureBuffer = toBuffer(signature);
+  const signatureParams = fromRpcSig(signatureBuffer);
+  const publicKey = ecrecover(
     msgHash,
     signatureParams.v,
     signatureParams.r,
     signatureParams.s
   );
-  const addressBuffer = EthUtil.publicToAddress(publicKey);
-  const address = EthUtil.bufferToHex(addressBuffer).toLowerCase();
+  const addressBuffer = publicToAddress(publicKey);
+  const address = bufferToHex(addressBuffer).toLowerCase();
 
   const version = getVersion(body);
 

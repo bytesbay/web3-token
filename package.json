@@ -1,16 +1,16 @@
 {
   "name": "web3-token",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "private": false,
   "description": "Web3 Token is a new way to authenticate users in hybrid dApps using signed messages. Implementation of EIP-4361",
   "author": "bytesbay",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --target lib src/lib.js && cp src/lib.d.ts dist/web3-token.d.ts",
-    "test:unit": "vue-cli-service test:unit",
+    "test": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint"
   },
-  "main": "dist/web3-token.common.js",
+  "main": "dist/web3-token.umd.min.js",
   "types": "dist/web3-token.d.ts",
   "dependencies": {
     "base-64": "^1.0.0",
