@@ -20,7 +20,7 @@ export const sign = async (signer, params = '1d') => {
 
   if(typeof params === 'string') {
     params = {
-      expire_in: params
+      expires_in: params
     }
   }
 
