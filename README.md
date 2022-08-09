@@ -123,7 +123,7 @@ const generateToken = async () => {
 const token = await Web3Token.sign(async msg => await signer.signMessage(msg), {
   domain: 'worldofdefish.com',
   statement: 'I accept the WoD Terms of Service: https://service.org/tos',
-  expire_in: '3 days',
+  expires_in: '3 days',
   // won't be able to use this token for one hour
   not_before: new Date(Date.now() + (3600 * 1000)),
   nonce: 11111111,
@@ -144,10 +144,10 @@ const { address, body } = await Web3Token.verify(token, {
 Name | Description | Required | Example
 --- | --- | --- | ---
 `signer` | A function that returns a promise with signature string eg: web3.personal.sign(`data`, `address`) | `required` | `(body) => web3.personal.sign(body, '0x23..1234')`
-`options` | An options object or, if passed a string, will be used as an `expire_in` option | `optional` (default: `'1d'`) | `{}` or `'1 day'`
+`options` | An options object or, if passed a string, will be used as an `expires_in` option | `optional` (default: `'1d'`) | `{}` or `'1 day'`
 `options.expires_in` | A string that represents a time span ([see ms module](https://github.com/vercel/ms)) or a number of milliseconds | `optional` (default: `1d`) | `'1 day'`
 `options.not_before` | A date after which the token becomes usable | `optional` | `new Date('12-12-2012')`
-`options.expiration_time` | A date till when token is valid. Overwrites `expire_in` parameter | `optional` | `new Date('12-12-2012')`
+`options.expiration_time` | A date till when token is valid. Overwrites `expires_in` parameter | `optional` | `new Date('12-12-2012')`
 `options.statement` | A human-readable ASCII assertion that the user will sign, and it must not contain `'\n'` | `optional` | `'I accept the ServiceOrg Terms of Service: https://service.org/tos'`
 `options.domain` | Authority that is requesting the signing. | `optional`(Unless verifier won't ask for it) | `'example.com'`
 `options.nonce` | A randomized token used to prevent replay attacks, at least 8 alphanumeric characters. | `optional` | `12345678`
