@@ -1,8 +1,9 @@
 import Base64 from 'base-64';
 import { timeSpan } from '../timespan';
 import isValidDomain from 'is-valid-domain';
+import { SignBody, Signer, SignOpts } from '../interfaces';
 
-function isURL(str) {
+function isURL(str: string): boolean {
   try {
     new URL(str);
     return true;
@@ -11,24 +12,20 @@ function isURL(str) {
   }
 }
 
-/**
- * 
- * @param {function} signer - The signer function, must return Promise<string>
- * @param {string|any} params - Params list or just a string representing a lifetime of token (for quick shortcut)
- */
-export const sign = async (signer, params = '1d') => {
+export const sign = async (
+  signer: Signer, 
+  opts: string | SignOpts = '1d'
+): Promise<string> => {
 
-  if(typeof params === 'string') {
-    params = {
-      expires_in: params
-    }
-  }
+  const params = typeof opts === 'string' ? {
+    expires_in: opts
+  } : opts;
 
   validateParams(params);
 
-  processParams(params);
+  const body = processParams(params);
 
-  const msg = buildMessage(params);
+  const msg = buildMessage(body);
   
   const signature = await signer(msg);
 
@@ -39,22 +36,22 @@ export const sign = async (signer, params = '1d') => {
   const token = Base64.encode(JSON.stringify({
     signature,
     body: msg,
-  }))
+  }));
 
   return token;
 }
 
-const isValidString = val => {
+const isValidString = (val: string): boolean => {
   return typeof val === 'string' && !!val.length;
 }
 
-const validateParams = params => {
+const validateParams = (params: SignOpts) => {
 
-  for (const key in params) {
-    if(typeof params[key] === 'string' && /\n/.test(params[key])) {
-      throw new Error(`"${key}" option cannot have LF (\\n)`);
-    }
-  }
+  // for (const key in params) {
+  //   if(typeof params[key] === 'string' && /\n/.test(params[key])) {
+  //     throw new Error(`"${key}" option cannot have LF (\\n)`);
+  //   }
+  // }
 
   if(params.domain && (!isValidString(params.domain) || !isValidDomain(params.domain))) {
     throw new Error('Invalid domain format (must be example.com)');
@@ -77,42 +74,46 @@ const validateParams = params => {
   }
 };
 
-const processParams = params => {
+const processParams = (params: SignOpts): SignBody => {
 
-  params.web3_token_version = '2'
-  params.issued_at = (new Date()).toISOString();
+  const body = {} as SignBody;
+
+  body.web3_token_version = '2'
+  body.issued_at = new Date();
 
   if(params.expiration_time) {
-    params.expiration_time = params.expiration_time.toISOString();
+    body.expiration_time = new Date(params.expiration_time);
   }
 
   if(params.expires_in && !params.expiration_time) {
-    params.expiration_time = (new Date(timeSpan(params.expires_in))).toISOString();
+    body.expiration_time = timeSpan(params.expires_in);
   }
 
   if(!params.expires_in && !params.expiration_time) {
-    params.expiration_time = (new Date(timeSpan('1d'))).toISOString();
+    body.expiration_time = timeSpan('1d');
   }
 
   if(params.not_before) {
-    params.not_before = params.not_before.toISOString();
+    body.not_before = new Date(params.not_before);
   }
 
   if(params.chain_id) {
-    params.chain_id = parseInt(Number(params.chain_id));
+    body.chain_id = parseInt(String(params.chain_id));
   }
 
   if(!params.uri && typeof window !== 'undefined' && window?.location?.href) {
-    params.uri = window.location.href;
+    body.uri = window.location.href;
   }
 
   if(!params.nonce) {
-    params.nonce = parseInt(Math.random() * 99999999);
+    body.nonce = parseInt(String(Math.random() * 99999999));
   }
+
+  return body;
 };
 
-const buildMessage = params => {
-  const message = [];
+const buildMessage = (params: SignBody): string => {
+  const message: string[] = [];
 
   if(params.domain) {
     message.push(`${params.domain} wants you to sign in with your Ethereum account.`);
@@ -129,15 +130,21 @@ const buildMessage = params => {
     'Web3 Token Version': params.web3_token_version,
     'Chain ID': params.chain_id,
     'Nonce': params.nonce,
-    'Issued At': params.issued_at,
-    'Expiration Time': params.expiration_time,
-    'Not Before': params.not_before,
+    'Issued At': params.issued_at.toISOString(),
+    'Expiration Time': params.expiration_time.toISOString(),
+    'Not Before': params.not_before ? params.not_before.toISOString() : undefined,
     'Request ID': params.request_id,
   };
 
   for (const label in param_labels) {
 
+    // @ts-ignore
+    const kek = param_labels[label];
+
+    // @ts-ignore
     if(param_labels[label] !== undefined) {
+      
+      // @ts-ignore
       message.push(`${label}: ${param_labels[label]}`)
     }
   }

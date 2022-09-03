@@ -1,6 +1,7 @@
 import { sign, verify } from '@/lib';
 import { ethers as Ethers } from 'ethers';
 
+// @ts-ignore
 const mnemonic_instance = Ethers.Wallet.fromMnemonic(process.env['ACCOUNT_MNEMONIC']);
 const ethers_provider = new Ethers.providers.JsonRpcProvider(process.env['CHAIN_PROVIDER_URL']);
 const ethers_signer = new Ethers.Wallet(
@@ -17,7 +18,7 @@ const default_token = {
 
 describe('Verify method', () => {
 
-  let real_address = ethers_signer.address.toLowerCase();
+  const real_address = ethers_signer.address.toLowerCase();
 
   it('must verify a signature', async () => {
     const token = await sign(body => ethers_signer.signMessage(body), { ...default_token })

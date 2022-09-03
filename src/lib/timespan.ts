@@ -1,7 +1,7 @@
 
 import ms from 'ms'
 
-export const timeSpan = val => {
+export const timeSpan = (val: string | number) => {
 
   const err_str = '"expires_in" argument should be a number of milliseconds or a string representing a timespan eg: "1d", "20h", 60';
 
@@ -12,10 +12,10 @@ export const timeSpan = val => {
       throw new Error(err_str)
     }
 
-    return (new Date(Date.now() + milliseconds)).toUTCString();
+    return new Date(Date.now() + milliseconds);
   }
   else if(typeof val === 'number') {
-    return (new Date(Date.now() + val)).toUTCString();
+    return new Date(Date.now() + val);
   }
   else {
     throw new Error(err_str)

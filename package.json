@@ -7,11 +7,10 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --target lib src/lib.js && cp src/lib.d.ts dist/web3-token.d.ts",
-    "test": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "test": "vue-cli-service test:unit"
   },
   "main": "dist/web3-token.umd.min.js",
-  "types": "dist/web3-token.d.ts",
   "dependencies": {
     "base-64": "^1.0.0",
     "bignumber.js": "^9.0.1",
@@ -22,16 +21,25 @@
     "to-hex": "0.0.17"
   },
   "devDependencies": {
+    "@types/base-64": "^1.0.0",
+    "@types/jest": "^24.0.19",
+    "@types/ms": "^0.7.31",
+    "@typescript-eslint/eslint-plugin": "^4.18.0",
+    "@typescript-eslint/parser": "^4.18.0",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-plugin-typescript": "^5.0.8",
     "@vue/cli-plugin-unit-jest": "^4.5.13",
     "@vue/cli-service": "~4.5.0",
+    "@vue/eslint-config-typescript": "^7.0.0",
     "@vue/test-utils": "^1.0.3",
     "babel-eslint": "^10.1.0",
     "core-js": "^3.6.5",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
     "ethers": "^5.4.7",
+    "ts-loader": "^8.4.0",
+    "typescript": "~4.5.5",
     "vue": "^2.6.11",
     "vue-template-compiler": "^2.6.11"
   },
@@ -46,10 +54,11 @@
     },
     "extends": [
       "plugin:vue/essential",
-      "eslint:recommended"
+      "eslint:recommended",
+      "@vue/typescript"
     ],
     "parserOptions": {
-      "parser": "babel-eslint"
+      "parser": "@typescript-eslint/parser"
     },
     "rules": {},
     "overrides": [
@@ -94,5 +103,6 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bytesbay/web3-token.git"
-  }
+  },
+  "types": "dist/web3-token.d.ts"
 }

@@ -1,18 +1,18 @@
 import parseAsHeaders from 'parse-headers';
+import { MessageSections, VerifyOpts } from '../interfaces';
 import { decrypt } from './decrypter';
 
-const getDomain = sections => {
+const getDomain = (sections: MessageSections): string | undefined => {
   if(/ wants you to sign in with your Ethereum account\.$/.test(sections[0][0])) {
     return sections[0][0].replace(" wants you to sign in with your Ethereum account.", '').trim();
   }
 }
 
-const splitSections = lines => {
+const splitSections = (lines: string[]): MessageSections => {
 
-  const sections = [ [] ];
+  const sections: MessageSections = [ [] ];
   let section_number = 0;
-  for (const i in lines) {
-    const line = lines[i];
+  for (const line of lines) {
     sections[section_number].push(line)
     if(line === '') {
       section_number++;
@@ -23,7 +23,7 @@ const splitSections = lines => {
   return sections;
 }
 
-const getStatement = sections => {
+const getStatement = (sections: MessageSections): string | undefined => {
 
   if(sections.length === 2) {
     const has_domain = !!getDomain(sections);
@@ -37,7 +37,7 @@ const getStatement = sections => {
   }
 }
 
-const parseBody = lines => {
+const parseBody = (lines: string[]): any => {
 
   const sections = splitSections(lines)
 
@@ -64,7 +64,7 @@ const parseBody = lines => {
   return parsed_body;
 }
 
-export const verify = (token, params = {}) => {
+export const verify = (token: string, params: VerifyOpts = {}) => {
 
   const { version, address, body } = decrypt(token);
 

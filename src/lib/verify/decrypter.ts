@@ -8,26 +8,30 @@ import {
   bufferToHex
 } from 'ethereumjs-util';
 import toHex from 'to-hex';
+import { DecrypterResult } from '../interfaces';
 
-const getVersion = body => {
+const getVersion = (body: string): number => {
+  // @ts-ignore
   const [ str ] = body.match(/Web3[\s-]+Token[\s-]+Version: \d/);
 
   return Number(str.replace(' ', '').split(':')[1]);
 }
 
-export const decrypt = token => {
+export const decrypt = (token: string): DecrypterResult => {
   if(!token || !token.length) {
     throw new Error('Token required.')
   }
 
-  var base64_decoded = Base64.decode(token);
+  const base64_decoded = Base64.decode(token);
 
   if(!base64_decoded || !base64_decoded.length) {
     throw new Error('Token malformed (must be base64 encoded)')
   }
 
+  let body: string, signature: string;
+
   try {
-    var { body, signature } = JSON.parse(base64_decoded);
+    ({ body, signature } = JSON.parse(base64_decoded));
   } catch (error) {
     throw new Error('Token malformed (unparsable JSON)')
   }
@@ -43,7 +47,7 @@ export const decrypt = token => {
   const msgBuffer = toBuffer('0x' + toHex(body));
   const msgHash = hashPersonalMessage(msgBuffer);
   const signatureBuffer = toBuffer(signature);
-  const signatureParams = fromRpcSig(signatureBuffer);
+  const signatureParams = fromRpcSig(signatureBuffer.toString());
   const publicKey = ecrecover(
     msgHash,
     signatureParams.v,
@@ -55,5 +59,10 @@ export const decrypt = token => {
 
   const version = getVersion(body);
 
-  return { version, address, body, signature }
+  return {
+    version, 
+    address,
+    body, 
+    signature
+  }
 }
