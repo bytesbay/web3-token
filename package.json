@@ -4,15 +4,15 @@
   "private": false,
   "description": "Web3 Token is a new way to authenticate users in hybrid dApps using signed messages. Implementation of EIP-4361",
   "author": "bytesbay",
-
-  "main": "dist/web3-token.umd.min.js",
-
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --target lib src/lib.ts",
+    "build": "vue-cli-service build --target lib src/lib.ts && npm run bundleDts",
     "test:unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "bundle-dts": "vue-cli-service bundle-dts --main ../src/lib.ts --removeSource",
+    "bundleDts": "vue-cli-service bundle-dts --baseDir ./ --main src/lib.ts --removeSource"
   },
+  "main": "dist/web3-token.umd.min.js",
   "dependencies": {
     "base-64": "^1.0.0",
     "bignumber.js": "^9.1.0",
@@ -43,10 +43,9 @@
     "ethers": "^5.7.0",
     "jest": "^27.0.5",
     "ts-jest": "^27.0.4",
-    "typescript": "~4.5.5"
+    "typescript": "~4.5.5",
+    "vue-cli-plugin-ts-bundler": "0.0.3"
   },
-  
-
   "bugs": {
     "url": "https://github.com/bytesbay/web3-token/issues"
   },

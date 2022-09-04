@@ -4,10 +4,10 @@ module.exports = defineConfig({
   transpileDependencies: true,
   configureWebpack: {
     plugins: [new NodePolyfillPlugin()],
-    optimization: {
-      splitChunks: {
-        chunks: "all",
-      },
-    },
+    // optimization: {
+    //   splitChunks: {
+    //     chunks: "all",
+    //   },
+    // },
   },
 });
