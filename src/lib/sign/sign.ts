@@ -47,11 +47,11 @@ const isValidString = (val: string): boolean => {
 
 const validateParams = (params: SignOpts) => {
 
-  // for (const key in params) {
-  //   if(typeof params[key] === 'string' && /\n/.test(params[key])) {
-  //     throw new Error(`"${key}" option cannot have LF (\\n)`);
-  //   }
-  // }
+  for (const key in params) {
+    if(typeof (params as any)[key] === 'string' && /\n/.test((params as any)[key])) {
+      throw new Error(`"${key}" option cannot have LF (\\n)`);
+    }
+  }
 
   if(params.domain && (!isValidString(params.domain) || !isValidDomain(params.domain))) {
     throw new Error('Invalid domain format (must be example.com)');
@@ -113,6 +113,10 @@ const processParams = (params: SignOpts): SignBody => {
     body.domain = params.domain;
   }
 
+  if(params.statement) {
+    body.statement = params.statement;
+  }
+
   return body;
 };
 
@@ -142,11 +146,10 @@ const buildMessage = (params: SignBody): string => {
 
   for (const label in param_labels) {
 
-    // @ts-ignore
-    if(param_labels[label] !== undefined) {
+    if((param_labels as any)[label] !== undefined) {
       
       // @ts-ignore
-      message.push(`${label}: ${param_labels[label]}`)
+      message.push(`${label}: ${(param_labels as any)[label]}`)
     }
   }
 
