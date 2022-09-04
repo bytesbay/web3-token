@@ -1,92 +1,52 @@
 {
   "name": "web3-token",
-  "version": "0.2.10",
+  "version": "1.0.0",
   "private": false,
   "description": "Web3 Token is a new way to authenticate users in hybrid dApps using signed messages. Implementation of EIP-4361",
   "author": "bytesbay",
+
+  "main": "dist/web3-token.umd.min.js",
+
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --target lib src/lib.js && cp src/lib.d.ts dist/web3-token.d.ts",
-    "lint": "vue-cli-service lint",
-    "test": "vue-cli-service test:unit"
+    "build": "vue-cli-service build --target lib src/lib.ts",
+    "test:unit": "vue-cli-service test:unit",
+    "lint": "vue-cli-service lint"
   },
-  "main": "dist/web3-token.umd.min.js",
   "dependencies": {
     "base-64": "^1.0.0",
-    "bignumber.js": "^9.0.1",
-    "ethereumjs-util": "^7.1.0",
+    "bignumber.js": "^9.1.0",
+    "ethereumjs-util": "^7.1.5",
     "is-valid-domain": "^0.1.6",
     "ms": "^2.1.3",
-    "parse-headers": "^2.0.4",
-    "to-hex": "0.0.17"
+    "node-polyfill-webpack-plugin": "^2.0.1",
+    "parse-headers": "^2.0.5",
+    "to-hex": "0.0.18",
+    "vue": "^3.2.13"
   },
   "devDependencies": {
     "@types/base-64": "^1.0.0",
-    "@types/jest": "^24.0.19",
+    "@types/jest": "^27.0.1",
     "@types/ms": "^0.7.31",
-    "@typescript-eslint/eslint-plugin": "^4.18.0",
-    "@typescript-eslint/parser": "^4.18.0",
-    "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-eslint": "~4.5.0",
-    "@vue/cli-plugin-typescript": "^5.0.8",
-    "@vue/cli-plugin-unit-jest": "^4.5.13",
-    "@vue/cli-service": "~4.5.0",
-    "@vue/eslint-config-typescript": "^7.0.0",
-    "@vue/test-utils": "^1.0.3",
-    "babel-eslint": "^10.1.0",
-    "core-js": "^3.6.5",
-    "eslint": "^6.7.2",
-    "eslint-plugin-vue": "^6.2.2",
-    "ethers": "^5.4.7",
-    "ts-loader": "^8.4.0",
-    "typescript": "~4.5.5",
-    "vue": "^2.6.11",
-    "vue-template-compiler": "^2.6.11"
+    "@typescript-eslint/eslint-plugin": "^5.4.0",
+    "@typescript-eslint/parser": "^5.4.0",
+    "@vue/cli-plugin-eslint": "~5.0.0",
+    "@vue/cli-plugin-typescript": "~5.0.0",
+    "@vue/cli-plugin-unit-jest": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "@vue/eslint-config-typescript": "^9.1.0",
+    "@vue/test-utils": "^2.0.0-0",
+    "@vue/vue3-jest": "^27.0.0-alpha.1",
+    "babel-jest": "^27.0.6",
+    "eslint": "^7.32.0",
+    "eslint-plugin-vue": "^8.0.3",
+    "ethers": "^5.7.0",
+    "jest": "^27.0.5",
+    "ts-jest": "^27.0.4",
+    "typescript": "~4.5.5"
   },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "globals": {
-      "Web3": "readonly",
-      "ethereum": "readonly"
-    },
-    "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended",
-      "@vue/typescript"
-    ],
-    "parserOptions": {
-      "parser": "@typescript-eslint/parser"
-    },
-    "rules": {},
-    "overrides": [
-      {
-        "files": [
-          "**/__tests__/*.{j,t}s?(x)",
-          "**/tests/unit/**/*.spec.{j,t}s?(x)"
-        ],
-        "env": {
-          "jest": true
-        }
-      },
-      {
-        "files": [
-          "**/__tests__/*.{j,t}s?(x)",
-          "**/tests/unit/**/*.spec.{j,t}s?(x)"
-        ],
-        "env": {
-          "jest": true
-        }
-      }
-    ]
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead"
-  ],
+  
+
   "bugs": {
     "url": "https://github.com/bytesbay/web3-token/issues"
   },
@@ -103,6 +63,5 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bytesbay/web3-token.git"
-  },
-  "types": "dist/web3-token.d.ts"
+  }
 }

@@ -1,11 +1,15 @@
 import parseAsHeaders from 'parse-headers';
-import { MessageSections, VerifyOpts } from '../interfaces';
+import { DecryptedBody, MessageSections, VerifyOpts } from '../interfaces';
 import { decrypt } from './decrypter';
 
 const getDomain = (sections: MessageSections): string | undefined => {
   if(/ wants you to sign in with your Ethereum account\.$/.test(sections[0][0])) {
     return sections[0][0].replace(" wants you to sign in with your Ethereum account.", '').trim();
   }
+}
+
+function isArrayOfStrings(value: unknown): value is string[] {
+  return Array.isArray(value) && value.every(item => typeof item === "string");
 }
 
 const splitSections = (lines: string[]): MessageSections => {
@@ -37,11 +41,12 @@ const getStatement = (sections: MessageSections): string | undefined => {
   }
 }
 
-const parseBody = (lines: string[]): any => {
+const parseBody = (lines: string[]): DecryptedBody => {
 
-  const sections = splitSections(lines)
+  const sections = splitSections(lines);
+  const main_section = sections[sections.length - 1].join('\n')
+  const parsed_body = parseAsHeaders(main_section) as any;
 
-  const parsed_body = parseAsHeaders(sections[sections.length - 1].join('\n'));
   for (const key in parsed_body) {
     const new_key = key.replace(/ /g, '-');
     parsed_body[new_key] = parsed_body[key];
@@ -53,12 +58,20 @@ const parseBody = (lines: string[]): any => {
   const domain = getDomain(sections);
   const statement = getStatement(sections);
 
-  if(domain) {
+  if(typeof domain !== 'undefined') {
     parsed_body.domain = domain
   }
 
-  if(statement) {
+  if(typeof statement !== 'undefined') {
     parsed_body.statement = statement
+  }
+
+  if(
+    typeof parsed_body['issued-at'] === 'undefined' ||
+    typeof parsed_body['expiration-time'] === 'undefined' ||
+    typeof parsed_body['domain'] === 'undefined'
+  ) {
+    throw new Error('Decrypted body is damaged');
   }
 
   return parsed_body;

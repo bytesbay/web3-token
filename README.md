@@ -4,9 +4,12 @@
 
 Web3 Token is a new way to authenticate users. See [this article](https://medium.com/@bytesbay/you-dont-need-jwt-anymore-974aa6196976) for more info. Implementation of [EIP-4361](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-4361.md).
 
-## Version 2 updates 🎉
+## Version 0.2 updates 🎉
 - I'm now 90% following [EIP-4361](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-4361.md). Why 90%? Because i don't like some things in that standard that makes it more difficult to use it for developers.
 - `body` (3rd parameter) is now deprecated.
+
+## Version 1.0 updates 🥂
+- Package moved to Typescript
 
 ---
 ## Install

@@ -139,9 +139,6 @@ const buildMessage = (params: SignBody): string => {
   for (const label in param_labels) {
 
     // @ts-ignore
-    const kek = param_labels[label];
-
-    // @ts-ignore
     if(param_labels[label] !== undefined) {
       
       // @ts-ignore

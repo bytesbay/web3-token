@@ -19,7 +19,7 @@ export interface SignOpts {
   uri?: string;
 
   chain_id?: number;
-};
+}
 
 export interface SignBody {
 
@@ -42,7 +42,7 @@ export interface SignBody {
   uri?: string;
 
   chain_id?: number;
-};
+}
 
 
 export interface DecryptedToken {
@@ -50,7 +50,7 @@ export interface DecryptedToken {
   address: string;
 
   body: any;
-};
+}
 
 export interface DecrypterResult {
 
@@ -67,6 +67,21 @@ export interface DecrypterResult {
 export interface VerifyOpts {
 
   domain?: string;
+}
+
+
+
+export interface DecryptedBody {
+  'uri'?: string;
+  'web3-token-version': number;
+  'chain-id'?: number;
+  'nonce'?: number;
+  'issued-at': string;
+  'expiration-time': string;
+  'not-before'?: string;
+  'request-id'?: string;
+  'statement'?: string;
+  'domain': string;
 }
 
 
