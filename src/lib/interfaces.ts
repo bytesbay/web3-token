@@ -4,9 +4,9 @@ export interface SignOpts {
 
   expires_in?: string;
 
-  not_before?: Date | string;
+  not_before?: Date;
 
-  expiration_time?: Date | string;
+  expiration_time?: Date;
 
   statement?: string;
 
@@ -81,7 +81,7 @@ export interface DecryptedBody {
   'not-before'?: string;
   'request-id'?: string;
   'statement'?: string;
-  'domain': string;
+  'domain'?: string;
 }
 
 

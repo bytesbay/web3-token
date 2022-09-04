@@ -21,7 +21,9 @@ const test = async () => {
 
   console.log('TOKEN CREATED', token);
 
-  const { address, body } = await Web3Token.verify(token, { domain: 'worldofdefish.com' });
+  const { address, body } = Web3Token.verify(token, {
+    domain: 'worldofdefish.com'
+  });
 
   console.log('ADDRESS RECOVERED', address, body);
 }

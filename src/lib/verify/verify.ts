@@ -8,10 +8,6 @@ const getDomain = (sections: MessageSections): string | undefined => {
   }
 }
 
-function isArrayOfStrings(value: unknown): value is string[] {
-  return Array.isArray(value) && value.every(item => typeof item === "string");
-}
-
 const splitSections = (lines: string[]): MessageSections => {
 
   const sections: MessageSections = [ [] ];
@@ -69,7 +65,7 @@ const parseBody = (lines: string[]): DecryptedBody => {
   if(
     typeof parsed_body['issued-at'] === 'undefined' ||
     typeof parsed_body['expiration-time'] === 'undefined' ||
-    typeof parsed_body['domain'] === 'undefined'
+    typeof parsed_body['web3-token-version'] === 'undefined'
   ) {
     throw new Error('Decrypted body is damaged');
   }
@@ -77,7 +73,7 @@ const parseBody = (lines: string[]): DecryptedBody => {
   return parsed_body;
 }
 
-export const verify = (token: string, params: VerifyOpts = {}) => {
+export const verify = (token: string, opts: VerifyOpts = {}) => {
 
   const { version, address, body } = decrypt(token);
 
@@ -95,9 +91,9 @@ export const verify = (token: string, params: VerifyOpts = {}) => {
 
   if(parsed_body['not-before'] && new Date(parsed_body['not-before']) > new Date()) {
     throw new Error('It\'s not yet time to use the token')
-  }
+  }  
 
-  if(params.domain && params.domain !== parsed_body.domain) {
+  if(opts.domain && opts.domain !== parsed_body.domain) {
     throw new Error('Inappropriate token domain')
   }
 

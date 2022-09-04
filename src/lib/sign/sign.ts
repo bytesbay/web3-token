@@ -69,8 +69,8 @@ const validateParams = (params: SignOpts) => {
     throw new Error('expiration_time must be an instance of Date');
   }
 
-  if(params.not_before && !(params.expiration_time instanceof Date)) {
-    throw new Error('expiration_time must be an instance of Date');
+  if(params.not_before && !(params.not_before instanceof Date)) {
+    throw new Error('not_before must be an instance of Date');
   }
 };
 
@@ -107,6 +107,10 @@ const processParams = (params: SignOpts): SignBody => {
 
   if(!params.nonce) {
     body.nonce = parseInt(String(Math.random() * 99999999));
+  }
+
+  if(params.domain) {
+    body.domain = params.domain;
   }
 
   return body;

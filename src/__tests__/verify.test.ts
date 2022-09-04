@@ -23,7 +23,7 @@ describe('Verify method', () => {
   it('must verify a signature', async () => {
     const token = await sign(body => ethers_signer.signMessage(body), { ...default_token })
 
-    const { address, body } = await verify(token);
+    const { address, body } = verify(token);
 
     expect(address).toEqual(real_address);
     expect(body['statement']).toEqual(default_token.statement);
