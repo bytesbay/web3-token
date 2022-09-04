@@ -9,7 +9,7 @@ Web3 Token is a new way to authenticate users. See [this article](https://medium
 - `body` (3rd parameter) is now deprecated.
 
 ## Version 1.0 updates 🥂
-- Package moved to Typescript
+- Package codebase moved to Typescript
 
 ---
 ## Install
