@@ -47,7 +47,9 @@ export const decrypt = (token: string): DecrypterResult => {
   const msgBuffer = toBuffer('0x' + toHex(body));
   const msgHash = hashPersonalMessage(msgBuffer);
   const signatureBuffer = toBuffer(signature);
-  const signatureParams = fromRpcSig(signatureBuffer.toString());
+
+  // @ts-ignore
+  const signatureParams = fromRpcSig(signatureBuffer);
   const publicKey = ecrecover(
     msgHash,
     signatureParams.v,
