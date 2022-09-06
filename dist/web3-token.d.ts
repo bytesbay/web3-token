@@ -5,7 +5,7 @@ declare module 'web3-token' {
     import { verify } from 'web3-token/lib/verify/verify';
     const Web3Token: {
         sign: (signer: import("./lib/interfaces").Signer, opts?: string | import("./lib/interfaces").SignOpts) => Promise<string>;
-        verify: (token: string, params?: import("./lib/interfaces").VerifyOpts) => {
+        verify: (token: string, opts?: import("./lib/interfaces").VerifyOpts) => {
             address: string;
             body: import("./lib/interfaces").DecryptedBody;
         };
@@ -21,7 +21,7 @@ declare module 'web3-token/lib/sign/sign' {
 
 declare module 'web3-token/lib/verify/verify' {
     import { DecryptedBody, VerifyOpts } from 'web3-token/lib/interfaces';
-    export const verify: (token: string, params?: VerifyOpts) => {
+    export const verify: (token: string, opts?: VerifyOpts) => {
         address: string;
         body: DecryptedBody;
     };
@@ -30,9 +30,9 @@ declare module 'web3-token/lib/verify/verify' {
 declare module 'web3-token/lib/interfaces' {
     export type Signer = (msg: string) => Promise<string>;
     export interface SignOpts {
-        expires_in?: string;
-        not_before?: Date | string;
-        expiration_time?: Date | string;
+        expires_in?: string | number;
+        not_before?: Date;
+        expiration_time?: Date;
         statement?: string;
         nonce?: number;
         request_id?: string;
@@ -75,7 +75,7 @@ declare module 'web3-token/lib/interfaces' {
         'not-before'?: string;
         'request-id'?: string;
         'statement'?: string;
-        'domain': string;
+        'domain'?: string;
     }
     export type MessageSections = (string[])[];
 }

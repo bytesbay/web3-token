@@ -16,10 +16,13 @@ const test = async () => {
   const token = await Web3Token.sign(msg => web3.eth.personal.sign(msg, your_address), {
     domain: 'worldofdefish.com',
     statement: 'Hey guys!',
+    expires_in: '1m',
     not_before: new Date(Date.now() - (24 * 60 * 60 * 1000)),
   });
 
   console.log('TOKEN CREATED', token);
+
+  await new Promise(resolve => setTimeout(resolve, 1000));
 
   const { address, body } = Web3Token.verify(token, {
     domain: 'worldofdefish.com'

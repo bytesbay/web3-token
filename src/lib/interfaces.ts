@@ -2,7 +2,7 @@ export type Signer = (msg: string) => Promise<string>;
 
 export interface SignOpts {
 
-  expires_in?: string;
+  expires_in?: string | number;
 
   not_before?: Date;
 

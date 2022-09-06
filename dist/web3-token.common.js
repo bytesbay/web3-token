@@ -35376,11 +35376,11 @@ var isValidString = function (val) {
     return typeof val === 'string' && !!val.length;
 };
 var validateParams = function (params) {
-    // for (const key in params) {
-    //   if(typeof params[key] === 'string' && /\n/.test(params[key])) {
-    //     throw new Error(`"${key}" option cannot have LF (\\n)`);
-    //   }
-    // }
+    for (var key in params) {
+        if (typeof params[key] === 'string' && /\n/.test(params[key])) {
+            throw new Error("\"".concat(key, "\" option cannot have LF (\\n)"));
+        }
+    }
     if (params.domain && (!isValidString(params.domain) || !is_valid_domain_default()(params.domain))) {
         throw new Error('Invalid domain format (must be example.com)');
     }
@@ -35393,8 +35393,8 @@ var validateParams = function (params) {
     if (params.expiration_time && !(params.expiration_time instanceof Date)) {
         throw new Error('expiration_time must be an instance of Date');
     }
-    if (params.not_before && !(params.expiration_time instanceof Date)) {
-        throw new Error('expiration_time must be an instance of Date');
+    if (params.not_before && !(params.not_before instanceof Date)) {
+        throw new Error('not_before must be an instance of Date');
     }
 };
 var processParams = function (params) {
@@ -35423,6 +35423,12 @@ var processParams = function (params) {
     if (!params.nonce) {
         body.nonce = parseInt(String(Math.random() * 99999999));
     }
+    if (params.domain) {
+        body.domain = params.domain;
+    }
+    if (params.statement) {
+        body.statement = params.statement;
+    }
     return body;
 };
 var buildMessage = function (params) {
@@ -35446,7 +35452,6 @@ var buildMessage = function (params) {
         'Request ID': params.request_id,
     };
     for (var label in param_labels) {
-        // @ts-ignore
         if (param_labels[label] !== undefined) {
             // @ts-ignore
             message.push("".concat(label, ": ").concat(param_labels[label]));
@@ -35497,7 +35502,6 @@ var decrypt = function (token) {
     var msgBuffer = (0,dist_browser.toBuffer)('0x' + to_hex_default()(body));
     var msgHash = (0,dist_browser.hashPersonalMessage)(msgBuffer);
     var signatureBuffer = (0,dist_browser.toBuffer)(signature);
-    // @ts-ignore
     var signatureParams = (0,dist_browser.fromRpcSig)(signatureBuffer);
     var publicKey = (0,dist_browser.ecrecover)(msgHash, signatureParams.v, signatureParams.r, signatureParams.s);
     var addressBuffer = (0,dist_browser.publicToAddress)(publicKey);
@@ -35519,9 +35523,6 @@ var getDomain = function (sections) {
         return sections[0][0].replace(" wants you to sign in with your Ethereum account.", '').trim();
     }
 };
-function isArrayOfStrings(value) {
-    return Array.isArray(value) && value.every(function (item) { return typeof item === "string"; });
-}
 var splitSections = function (lines) {
     var sections = [[]];
     var section_number = 0;
@@ -35567,13 +35568,13 @@ var parseBody = function (lines) {
     }
     if (typeof parsed_body['issued-at'] === 'undefined' ||
         typeof parsed_body['expiration-time'] === 'undefined' ||
-        typeof parsed_body['domain'] === 'undefined') {
+        typeof parsed_body['web3-token-version'] === 'undefined') {
         throw new Error('Decrypted body is damaged');
     }
     return parsed_body;
 };
-var verify = function (token, params) {
-    if (params === void 0) { params = {}; }
+var verify = function (token, opts) {
+    if (opts === void 0) { opts = {}; }
     var _a = decrypt(token), version = _a.version, address = _a.address, body = _a.body;
     if (version === 1) {
         throw new Error('Tokens version 1 are not supported by the current version of module');
@@ -35586,7 +35587,7 @@ var verify = function (token, params) {
     if (parsed_body['not-before'] && new Date(parsed_body['not-before']) > new Date()) {
         throw new Error('It\'s not yet time to use the token');
     }
-    if (params.domain && params.domain !== parsed_body.domain) {
+    if (opts.domain && opts.domain !== parsed_body.domain) {
         throw new Error('Inappropriate token domain');
     }
     return { address: address, body: parsed_body };
