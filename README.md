@@ -167,4 +167,4 @@ Name | Description | Required | Example
 ---
 
 ## License
-Web3 Token is released under the MIT license. © 2021 Miroslaw Shpak
+Web3 Token is released under the MIT license. © 2023 Miroslaw Shpak
