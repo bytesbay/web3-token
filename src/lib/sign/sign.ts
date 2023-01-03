@@ -105,8 +105,12 @@ const processParams = (params: SignOpts): SignBody => {
     body.uri = window.location.href;
   }
 
-  if(!params.nonce) {
+  if(params.nonce) {
     body.nonce = parseInt(String(Math.random() * 99999999));
+  }
+
+  if(params.request_id) {
+    body.request_id = params.request_id;
   }
 
   if(params.domain) {

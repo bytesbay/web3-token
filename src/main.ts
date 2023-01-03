@@ -17,6 +17,8 @@ const test = async () => {
     domain: 'worldofdefish.com',
     statement: 'Hey guys!',
     expires_in: '1m',
+    nonce: 123,
+    request_id: '123',
     not_before: new Date(Date.now() - (24 * 60 * 60 * 1000)),
   });
 
@@ -27,7 +29,7 @@ const test = async () => {
   const { address, body } = Web3Token.verify(token, {
     domain: 'worldofdefish.com'
   });
-
+  
   console.log('ADDRESS RECOVERED', address, body);
 }
 
