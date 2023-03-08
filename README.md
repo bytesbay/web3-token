@@ -153,7 +153,7 @@ Name | Description | Required | Example
 `options.expiration_time` | A date till when token is valid. Overwrites `expires_in` parameter | `optional` | `new Date('12-12-2012')`
 `options.statement` | A human-readable ASCII assertion that the user will sign, and it must not contain `'\n'` | `optional` | `'I accept the ServiceOrg Terms of Service: https://service.org/tos'`
 `options.domain` | Authority that is requesting the signing. | `optional`(Unless verifier won't ask for it) | `'example.com'`
-`options.nonce` | A randomized token used to prevent replay attacks, at least 8 alphanumeric characters. | `optional` | `12345678`
+`options.nonce` | A token used to prevent replay attacks, at least 8 alphanumeric characters. | `optional` | `12345678`
 `options.request_id` | A system-specific identifier that may be used to uniquely refer to the sign-in request. | `optional` | `231`
 
 
