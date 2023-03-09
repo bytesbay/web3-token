@@ -22,8 +22,6 @@
     "to-hex": "0.0.18"
   },
   "devDependencies": {
-    "vue": "^3.2.13",
-    "node-polyfill-webpack-plugin": "^2.0.1",
     "@types/base-64": "^1.0.0",
     "@types/jest": "^27.0.1",
     "@types/ms": "^0.7.31",
@@ -41,9 +39,15 @@
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
     "ethers": "^5.7.0",
+    "headless-terminal": "^0.4.0",
     "jest": "^27.0.5",
+    "node-polyfill-webpack-plugin": "^2.0.1",
+    "normalize.css": "^8.0.1",
+    "sass": "^1.58.3",
+    "sass-loader": "^10.4.1",
     "ts-jest": "^27.0.4",
     "typescript": "~4.5.5",
+    "vue": "^3.2.13",
     "vue-cli-plugin-ts-bundler": "0.0.3"
   },
   "bugs": {

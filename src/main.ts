@@ -1,37 +1,7 @@
-import Web3Token from './lib';
+import App from "./App.vue";
+import { createApp } from 'vue';
+import 'normalize.css';
+import './styles.scss'
 
-const test = async () => {
-
-  // Connection to MetaMask wallet
-  // @ts-ignore
-  const web3 = new Web3(ethereum);
-
-  // @ts-ignore
-  await ethereum.request({ method: 'eth_requestAccounts'});
-
-  // getting address from which we will sign message
-  const your_address = (await web3.eth.getAccounts())[0];
-
-  // getting a token
-  const token = await Web3Token.sign(msg => web3.eth.personal.sign(msg, your_address), {
-    domain: 'worldofdefish.com',
-    statement: 'Hey guys!',
-    expires_in: '1m',
-    nonce: 123,
-    request_id: '123',
-    not_before: new Date(Date.now() - (24 * 60 * 60 * 1000)),
-  });
-
-  console.log('TOKEN CREATED', token);
-
-  await new Promise(resolve => setTimeout(resolve, 1000));
-
-  const { address, body } = Web3Token.verify(token, {
-    domain: 'worldofdefish.com'
-  });
-  
-  console.log('ADDRESS RECOVERED', address, body);
-}
-
-// @ts-ignore
-document.querySelector('#btn').addEventListener('click', () => test())
+(window as any).$app = createApp(App)
+  .mount("#app");
