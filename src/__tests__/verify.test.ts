@@ -1,9 +1,9 @@
 import { sign, verify } from '@/lib';
-import { ethers as Ethers } from 'ethers';
+import * as Ethers from 'ethers';
 
 // @ts-ignore
 const mnemonic_instance = Ethers.Wallet.fromMnemonic(process.env['ACCOUNT_MNEMONIC']);
-const ethers_provider = new Ethers.providers.JsonRpcProvider(process.env['CHAIN_PROVIDER_URL']);
+const ethers_provider = new Ethers.JsonRpcProvider(process.env['CHAIN_PROVIDER_URL']);
 const ethers_signer = new Ethers.Wallet(
   mnemonic_instance.privateKey, 
   ethers_provider

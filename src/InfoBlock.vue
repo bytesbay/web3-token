@@ -23,7 +23,7 @@ import { onMounted, defineProps } from 'vue';
 const props = defineProps({
   color: {
     type: String,
-    default: '#b1cdcb',
+    default: '#B7BCEA',
   },
   ft: {
     type: Boolean,
@@ -43,7 +43,6 @@ const props = defineProps({
     color: #000;
     display: flex;
     align-items: center;
-    border-radius: 6px 6px 0 0;
 
     > div {
       display: flex;
@@ -72,7 +71,6 @@ const props = defineProps({
     background: #000;
     display: flex;
     flex-direction: column;
-    border-radius: 0 0 6px 6px;
   }
 }
 
