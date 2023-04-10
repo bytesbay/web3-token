@@ -3,15 +3,17 @@
 declare module 'web3-token' {
     import { sign } from 'web3-token/lib/sign/sign';
     import { verify } from 'web3-token/lib/verify/verify';
+    import { decrypt } from 'web3-token/lib/decrypt/decrypt';
     const Web3Token: {
         sign: (signer: import("./lib/interfaces").Signer, opts?: string | import("./lib/interfaces").SignOpts) => Promise<string>;
+        decrypt: (token: string) => import("./lib/interfaces").DecrypterResult;
         verify: (token: string, opts?: import("./lib/interfaces").VerifyOpts) => {
             address: string;
             body: import("./lib/interfaces").DecryptedBody;
         };
     };
     export default Web3Token;
-    export { sign, verify };
+    export { sign, decrypt, verify };
 }
 
 declare module 'web3-token/lib/sign/sign' {
@@ -25,6 +27,11 @@ declare module 'web3-token/lib/verify/verify' {
         address: string;
         body: DecryptedBody;
     };
+}
+
+declare module 'web3-token/lib/decrypt/decrypt' {
+    import { DecrypterResult } from 'web3-token/lib/interfaces';
+    export const decrypt: (token: string) => DecrypterResult;
 }
 
 declare module 'web3-token/lib/interfaces' {

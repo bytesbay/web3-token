@@ -1,6 +1,6 @@
 import parseAsHeaders from 'parse-headers';
 import { DecryptedBody, MessageSections, VerifyOpts } from '../interfaces';
-import { decrypt } from './decrypter';
+import { decrypt } from '../decrypt/decrypt';
 
 const getDomain = (sections: MessageSections): string | undefined => {
   if(/ wants you to sign in with your Ethereum account\.$/.test(sections[0][0])) {
