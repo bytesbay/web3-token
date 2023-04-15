@@ -7,6 +7,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --target lib src/lib.ts && npm run bundle-dts && mv src/web3-token.d.ts dist/web3-token.d.ts && cp ./shims-vue.example.ts src/shims-vue.d.ts",
+    "build-web": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
     "bundle-dts": "vue-cli-service bundle-dts --baseDir ./src --main ../src/lib.ts --removeSource"
