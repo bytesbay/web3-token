@@ -3,7 +3,8 @@
     <div class="container">
       <header>
         
-        <AppLogo/>
+        <AppLogo class="logo"/>
+        <AppLogoShort class="logo-short"/>
 
         <div class="links">
           <a target="_blank" href="https://github.com/bytesbay/web3-token">
@@ -28,7 +29,7 @@
 
       <div class="content">
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1em;">
+        <div class="main-container">
           <InfoBlock ft class="seo">
 
             <template #title>
@@ -148,6 +149,7 @@
 
 import { onMounted, reactive, ref } from 'vue';
 import AppLogo from './AppLogo.vue';
+import AppLogoShort from './AppLogoShort.vue';
 import InfoBlock from './InfoBlock.vue';
 import BgSvg from './BgSvg.vue';
 import { sign } from './lib';
@@ -174,6 +176,7 @@ async function connectWallet(type: "wallet-connect" | "metamask") {
 
   if (type === "wallet-connect") {
     const _provider = await EthereumProvider.init({
+      showQrModal: true,
       projectId: 'd6a07ee60a0f4db6876af0290397ce3e',
       chains: [
         1
@@ -292,6 +295,10 @@ async function generateToken() {
         width: 130%;
         height: auto;
         z-index: -1;
+
+        @media (max-width: 500px) {
+          width: 200%;
+        }
       }
     }
 
@@ -312,9 +319,25 @@ async function generateToken() {
         }
       }
 
-      svg {
+      .logo {
         height: 100%;
         width: auto;
+      }
+
+      .logo-short {
+        height: 100%;
+        width: auto;
+        display: none;
+      }
+
+      @media (max-width: 500px) {
+        .logo {
+          display: none;
+        }
+
+        .logo-short {
+          display: block;
+        }
       }
       
     }
@@ -442,6 +465,20 @@ async function generateToken() {
 
     &:hover {
       color: #000;
+    }
+  }
+}
+
+.main-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1em;
+
+  @media (max-width: 500px) {
+    display: block;
+
+    > :last-child {
+      margin-top: 3em;
     }
   }
 }

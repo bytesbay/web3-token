@@ -1,4 +1,4 @@
-import { sign, verify } from '@/lib';
+import { sign, verify } from '../lib';
 import * as Ethers from 'ethers';
 
 // @ts-ignore

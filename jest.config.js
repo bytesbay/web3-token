@@ -1,7 +1,7 @@
 module.exports = {
-  preset: '@vue/cli-plugin-unit-jest/presets/typescript',
+  preset: 'ts-jest',
   testEnvironment: "node",
-  transformIgnorePatterns: [
-    "node_modules\/(?!(@adraffy))"
-  ]
+  // transformIgnorePatterns: [
+  //   "node_modules\/(?!(@adraffy))"
+  // ]
 }

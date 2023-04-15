@@ -6,7 +6,7 @@
   "author": "bytesbay",
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --target lib src/lib.ts && npm run bundle-dts && mv src/web3-token.d.ts dist/web3-token.d.ts && cp ./shims-vue.example.d.ts src/shims-vue.d.ts",
+    "build": "vue-cli-service build --target lib src/lib.ts && npm run bundle-dts && mv src/web3-token.d.ts dist/web3-token.d.ts && cp ./shims-vue.example.ts src/shims-vue.d.ts",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
     "bundle-dts": "vue-cli-service bundle-dts --baseDir ./src --main ../src/lib.ts --removeSource"
@@ -29,7 +29,6 @@
     "@types/node": "^18.7.14",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
-    "@vue/cli-plugin-babel": "^5.0.8",
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-plugin-typescript": "~5.0.0",
     "@vue/cli-plugin-unit-jest": "~5.0.0",
@@ -41,7 +40,7 @@
     "babel-jest": "^27.0.6",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
-    "ethers": "^6.1.0",
+    "ethers": "^6.3.0",
     "headless-terminal": "^0.4.0",
     "jest": "^27.0.5",
     "node-polyfill-webpack-plugin": "^2.0.1",
