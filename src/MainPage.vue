@@ -11,7 +11,7 @@
             Github
           </a>
 
-          <a target="_blank" href="https://bytesbay.hashnode.dev/stop-making-custom-sign-in-messages-in-your-dapp-gilfoyle-style">
+          <a target="_blank" href="https://medium.com/p/a9799da9ab4e">
             Why?
           </a>
         </div>
