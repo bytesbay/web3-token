@@ -256,9 +256,11 @@ async function generateToken() {
 .frame {
   display: flex;
   flex-direction: column;
-  width: 100vw;
   position: relative;
   overflow-x: hidden;
+  width: 100%;
+  padding: 0 20px;
+  box-sizing: border-box;
 
   .container {
     padding: 0 20px;

@@ -1,3 +1,9 @@
+// connect IBM Plex Mono font
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url(/IBMPlexMono-Regular.ttf);
+}
+
 html {
   color: #B7BCEA !important;
   background-color: #000;
