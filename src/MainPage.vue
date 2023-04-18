@@ -263,7 +263,7 @@ async function generateToken() {
   box-sizing: border-box;
 
   .container {
-    padding: 0 20px;
+    // padding: 0 20px;
     max-width: 960px;
     width: 100%;
     height: 100%;
